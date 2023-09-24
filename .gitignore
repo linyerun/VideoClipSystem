@@ -1,0 +1,6 @@
+.idea
+video_clip_system_logs
+video_clip_system_files
+video_clip_system_temp_files
+logs
+*.exe

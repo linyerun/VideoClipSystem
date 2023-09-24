@@ -1,0 +1,152 @@
+basePath: /
+definitions:
+  dto.RegisterDto:
+    properties:
+      auth_code:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  dto.UserDto:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  dto.VideoDto:
+    properties:
+      end_time:
+        type: integer
+      start_time:
+        type: integer
+      url:
+        type: string
+    type: object
+  resp_msg.RespMsg:
+    properties:
+      code:
+        type: integer
+      data:
+        type: any
+      msg:
+        type: string
+    type: object
+host: 120.79.155.59:9997
+info:
+  contact: {}
+  description: 'author: 林叶润'
+  title: 视频剪辑项目接口文档
+  version: "1.0"
+paths:
+  /email/authCode/:
+    post:
+      consumes:
+      - application/json
+      description: 发送验证码
+      parameters:
+      - description: 用户邮箱
+        in: query
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp_msg.RespMsg'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/resp_msg.RespMsg'
+      summary: 发送验证码
+      tags:
+      - 邮箱模块
+  /user/login/:
+    post:
+      consumes:
+      - application/json
+      description: 已注册用户可通过登录进入app
+      parameters:
+      - description: 登录所需信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp_msg.RespMsg'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/resp_msg.RespMsg'
+      summary: 登录
+      tags:
+      - 用户模块
+  /user/register/:
+    post:
+      consumes:
+      - application/json
+      description: 用户注册入口
+      parameters:
+      - description: 注册所需信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RegisterDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp_msg.RespMsg'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/resp_msg.RespMsg'
+      summary: 注册
+      tags:
+      - 用户模块
+  /video/clip/:
+    post:
+      consumes:
+      - '*/*'
+      description: 用于剪辑视频
+      parameters:
+      - description: token值
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 剪辑一段视频所需信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.VideoDto'
+      produces:
+      - '*/*'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp_msg.RespMsg'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/resp_msg.RespMsg'
+      summary: 视频剪辑
+      tags:
+      - 视频模块
+swagger: "2.0"
